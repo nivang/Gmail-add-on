@@ -9,7 +9,7 @@ function createDockCardEmail(text, isHomepage) {
   var email = Session.getEffectiveUser().getEmail(); 
   Logger.log(email);
 
-  var userInfo = this.accessProtectedResource('-----------------------------'+email, 'get', null, null, null)
+  var userInfo = this.accessProtectedResource('https://api-dev.dockhealth.app/heydoc-services/user/findUserByEmail?email='+email, 'get', null, null, null)
   Logger.log(userInfo)
 
   var json =  userInfo.getContentText();
@@ -26,7 +26,7 @@ function createDockCardEmail(text, isHomepage) {
   userProperties.setProperty("DOCK_USER_IDENTIFIER", userIdentifier);
   userProperties.setProperty("DOCK_USER_FULL_NAME", fullName);
 
-  var profileImageUrl = "-------------------------------"+userIdentifier+"/"+profilePictureHash;
+  var profileImageUrl = "https://api-dev.dockhealth.app/heydoc-services/user/profilePicture/"+userIdentifier+"/"+profilePictureHash;
   userProperties.setProperty("DOCK_USER_PROFILE_IMAGE_URL", profileImageUrl);
   Logger.log(profileImageUrl)
 
@@ -202,7 +202,7 @@ var image = CardService.newImage().setImageUrl("https://static.wixstatic.com/med
 
   } else {
 
-    var response = this.accessProtectedResource('----------------------------------'+assigned_to_idenifier, 'get', 'application/json', null, null)
+    var response = this.accessProtectedResource('https://api-dev.dockhealth.app/heydoc-services/user/'+assigned_to_idenifier, 'get', 'application/json', null, null)
 
   Logger.log(response);
 
@@ -258,7 +258,7 @@ var image = CardService.newImage().setImageUrl("https://static.wixstatic.com/med
 
   var taskStatus = userProperties.getProperty("TASK_STATUS");
 
-  var response = this.accessProtectedResource('------------------------------------------------', 'get', 'application/json', null, null)
+  var response = this.accessProtectedResource('https://api-dev.dockhealth.app/heydoc-services/organization/settings/taskStatus/getAllTaskStatuses', 'get', 'application/json', null, null)
 
   Logger.log(response);
 
@@ -307,7 +307,7 @@ var image = CardService.newImage().setImageUrl("https://static.wixstatic.com/med
 
     var task_list = userProperties.getProperty("TASK_LIST");
 
-  var response = this.accessProtectedResource('--------------------------------------------', 'get', 'application/json', null, null)
+  var response = this.accessProtectedResource('https://api-dev.dockhealth.app/heydoc-services/list/findTaskListsByUserId', 'get', 'application/json', null, null)
 
   Logger.log(response);
   
@@ -465,7 +465,7 @@ function submitEmail(event) {
 
     console.log(data);
 
-    var response = this.accessProtectedResource('---------------------------------------', 'post', 'application/json', JSON.stringify(data), null)
+    var response = this.accessProtectedResource('https://api-dev.dockhealth.app/heydoc-services/task', 'post', 'application/json', JSON.stringify(data), null)
 
     console.log(response);
 
